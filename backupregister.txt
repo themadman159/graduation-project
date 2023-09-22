@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครสมาชิก</title>
+    <link rel="stylesheet" href="register-login.css?v=9999">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+        <form action="register_db.php" method="post">
+            <img src="" alt="">
+            กรอกชื่อ : <input type="text" name ="username" required>
+
+            <br>
+
+            กรอกเบอร์โทร : <input type="text" name ="tel" required>
+
+            <br>
+
+            <button type="submit" name ="submitfrom">ยืนยัน</button>
+
+            <br>                
+
+            มีสมาชิกอยู่แล้ว ? <a href="login_page.php">เข้าสู่ระบบ</a>
+        </form>
+</body>
+</html>
