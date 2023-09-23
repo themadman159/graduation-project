@@ -9,6 +9,8 @@ $sql = "INSERT INTO user (username_id, tel_id, role_user) VALUES (:username, :te
 
 $stmt = $conn->prepare($sql) ;  
     
+$stmt = $conn->prepare($sql) ; 
+
 $stmt->bindParam(':username', $username, PDO::PARAM_STR);
 $stmt->bindParam(':tel', $tel, PDO::PARAM_STR);
 $stmt->bindParam(':role', $role, PDO::PARAM_STR);

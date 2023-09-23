@@ -30,7 +30,11 @@
       <label for="floatingInput">กรอกชื่อผู้ใช้</label>
     </div>
     <div class="form-floating">
+<<<<<<< HEAD
       <input type="text" class="form-control" id="floatingPassword" placeholder="Password" name="tel" required maxlength="10">
+=======
+      <input type="text" class="form-control" id="floatingPassword" placeholder="Password" name="tel" required>
+>>>>>>> origin/main
       <label for="floatingPassword">กรอกเบอร์โทรศัพท์</label>
     </div>
     <label for="">มีสมาชิกอยู่แล้ว ? <a href="login_page.php">เข้าสู่ระบบ</a></label>

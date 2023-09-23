@@ -106,8 +106,13 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= $user['tel_id']; ?></td>
                             <td><?= $user['role_user']; ?></td>
                             <td>
+<<<<<<< HEAD
                                 <button type="button" class="btn btn-outline-warning" onclick="document.location='user_edit.php?iduser=<?= $user['user_id']; ?>'">แก้ไขผู้ใช้งาน</button>
                                 <button type="button" class="btn btn-outline-danger" onclick="document.location='user_delete.php?iduser=<?= $user['user_id']; ?>'">ลบผู้ใช้งาน</button>
+=======
+                                <button type="button" class="btn btn-outline-warning" onclick="document.location='user_edit.php?iduser=<?= $user['tel_id']; ?>'">แก้ไขผู้ใช้งาน</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="document.location='user_delete.php?iduser=<?= $user['tel_id']; ?>'">ลบผู้ใช้งาน</button>
+>>>>>>> origin/main
                             </td>
                         </tr>
                     <?php } ?>

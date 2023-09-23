@@ -26,7 +26,11 @@
     <h1 class="h3 mb-3 fw-normal">เข้าสู่ระบบ</h1>
 
     <div class="form-floating">
+<<<<<<< HEAD
       <input type="text" class="form-control" id="floatingPassword" placeholder="Password" name="tel" required maxlength="10" >
+=======
+      <input type="text" class="form-control" id="floatingPassword" placeholder="Password" name="tel" required>
+>>>>>>> origin/main
       <label for="floatingPassword">กรอกเบอร์โทรศัพท์</label>
     </div>
     <label for="">ยังไม่มีสมาชิก ? <a href="register_page.php">สมัครสมาชิก</a></label>
