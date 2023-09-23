@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
 // Establish database connection
 $servername = "localhost";
 $username = "root";

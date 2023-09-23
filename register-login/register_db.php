@@ -19,15 +19,9 @@ if ( isset ($_POST['tel']) && $_POST['username']) {
             echo '<script type="text/Javascript">
                     window.alert("มีผู้ใช้นี้อยู่แล้ว") ;
                     window.location.href = "register_page.php" ;
-<<<<<<< HEAD
                 </script>'; 
         } else {
             $query_create_user = "INSERT INTO user(user_id, username_id , tel_id , role_user) VALUE ( 'NULL', '$username' , '$tel' , 'member') " ;
-=======
-                </script>';
-        } else {
-            $query_create_user = "INSERT INTO user(username_id , tel_id , role_user) VALUE ('$username' , '$tel' , 'member') " ;
->>>>>>> origin/main
             $call_back_query_create_user = mysqli_query( $conn , $query_create_user ) ;
     
             if ( $call_back_query_create_user ) {
