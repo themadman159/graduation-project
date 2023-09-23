@@ -18,11 +18,7 @@ $stmt_show_name->execute();
 $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
 
 $iduser = $_GET['iduser'] ;
-<<<<<<< HEAD
 $sql_edit = "SELECT * FROM user WHERE user_id = '$iduser'";
-=======
-$sql_edit = "SELECT * FROM user WHERE tel_id = '$iduser'";
->>>>>>> origin/main
 $stmt_edit = $conn->prepare($sql_edit);
 $stmt_edit->execute();
 $result_edit = $stmt_edit->fetch(PDO::FETCH_ASSOC);
@@ -107,11 +103,7 @@ $result_edit = $stmt_edit->fetch(PDO::FETCH_ASSOC);
             </div>
             <div class="container d-flex align-items-center justify-content-between">
                 <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='user_management.php'">ย้อนกลับ</button>
-<<<<<<< HEAD
                 <button type="submit" class="btn btn-outline-primary mx-2" onclick="document.location='user_edit_db.php?iduser=<?=$result_edit['user_id'];?>'">แก้ไขผู้ใช้งาน</button>
-=======
-                <button type="submit" class="btn btn-outline-primary mx-2" onclick="document.location='user_edit_db.php?iduser=<?=$result_edit['tel_id'];?>'">แก้ไขผู้ใช้งาน</button>
->>>>>>> origin/main
             </div>
         </form>
     </div>
