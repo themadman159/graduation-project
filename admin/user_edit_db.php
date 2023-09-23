@@ -7,13 +7,14 @@
     $username = $_POST['username'];
     $role = $_POST['role'];
 
-    $sql = "UPDATE `user` SET `username_id`=:username, `tel_id`=:tel, `role_user`=:role WHERE `tel_id` = :tel";
+    $sql = "UPDATE `user` SET `username_id`=:username, `tel_id`=:tel, `role_user`=:role WHERE `user_id` = :iduser";
 
     $stmt = $conn->prepare($sql);
 
-    $stmt->bindParam(':username', $username, PDO::PARAM_STR) ; 
+    $stmt->bindParam(':username', $username, PDO::PARAM_STR) ;          
     $stmt->bindParam(':tel', $tel, PDO::PARAM_STR) ; 
     $stmt->bindParam(':role', $role, PDO::PARAM_STR) ; 
+    $stmt->bindParam(':iduser', $iduser, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
         echo '<script type="text/Javascript">

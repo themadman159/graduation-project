@@ -3,7 +3,7 @@
 
     $iduser = $_GET['iduser'] ;
 
-    $sql= "DELETE FROM user WHERE tel_id = '$iduser'";
+    $sql= "DELETE FROM user WHERE user_id = '$iduser'";
 
     $stmt = $conn->prepare($sql) ;
 
@@ -14,7 +14,7 @@
     </script>';
     } else {
         echo '<script type="text/Javascript">
-        window.alert("ไม่สวามารถลบข้อมูลได้") ;
+        window.alert("ไม่สามารถลบข้อมูลได้") ;
         window.location.href = "user_management.php" ;
     </script>';
     }

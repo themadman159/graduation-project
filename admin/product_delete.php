@@ -1,9 +1,9 @@
 <?php
     require('../server_pdo.php');
 
-    $product = $_GET['product_code'] ;
+    $product = $_GET['product_barcode'] ;
 
-    $sql= "DELETE FROM main_product WHERE barcode = '$product'";
+    $sql= "DELETE FROM main_product WHERE product_id = '$product'";
 
     $stmt = $conn->prepare($sql) ;
 

@@ -123,8 +123,8 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
                             <td><?= $product['product_name']; ?></td>
                             <td><?= $product['price']; ?></td>
                             <td>
-                                <button type="button" class="btn btn-outline-warning" onclick="document.location='product_edit.php'">แก้ไขสินค้า</button>
-                                <button type="button" class="btn btn-outline-danger" onclick="document.location='product_delete.php?product_barcode=<?= $product['barcode']; ?>'">ลบสินค้า</button>
+                                <button type="button" class="btn btn-outline-warning" onclick="document.location='product_edit.php?barcode_product=<?= $product['product_id']; ?>'">แก้ไขสินค้า</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="document.location='product_delete.php?product_barcode=<?= $product['product_id']; ?>'">ลบสินค้า</button>
                             </td>
                             </td>
                         </tr>

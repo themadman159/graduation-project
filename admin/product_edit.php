@@ -13,16 +13,16 @@ if (!isset($_SESSION['tel_id']) || $_SESSION['role_user'] != 'admin') {
 
 $name = $_SESSION['tel_id'];
 
-$sql = "SELECT * FROM user";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 $sql_show_name = "SELECT * FROM user WHERE tel_id = '$name'";
 $stmt_show_name = $conn->prepare($sql_show_name);
 $stmt_show_name->execute();
 $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
 
+$barcode_product = $_GET['barcode_product'];
+$sql_edit = "SELECT * FROM main_product WHERE product_id = '$barcode_product'";
+$stmt_edit = $conn->prepare($sql_edit);
+$stmt_edit->execute();
+$result_edit = $stmt_edit->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -56,7 +56,7 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="user_management.php" class="nav-link active" aria-current="page">
+                    <a href="user_management.php" class="nav-link text-white" aria-current="page">
                         จัดการผู้ใช้งาน
                     </a>
                 </li>
@@ -66,12 +66,12 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
                     </a>
                 </li>
                 <li>
-                    <a href="basket_page.php" class="nav-link text-white">
+                    <a href="basket_page.php" class="nav-link text-white    ">
                         จัดการรถเข็น
                     </a>
                 </li>
                 <li>
-                    <a href="product_page.php" class="nav-link text-white">
+                    <a href="product_page.php" class="nav-link active">
                         จัดการสินค้า
                     </a>
                 </li>
@@ -80,39 +80,37 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
             <div class="container align-items-center justify-content-center">
                 <?php foreach ($result_show_name as $user_name) { ?>
                     <p class="font-weight-bold">แอดมิน : <?= $user_name['tel_id']; ?>
-
                     <?php } ?>
                     <button type="button" class="btn btn-outline-danger" onclick="document.location='../register-login/login_page.php?logout=1'">ออกจากระบบ</button>
                     </p>
             </div>
         </div>
-        <div class="container mt-3 vh-100">
-            <h1>จัดการข้อมูลผู้ใช้งาน <button type="button" class="btn btn-outline-primary" onclick="document.location='user_add.php'">เพิ่มผู้ใช้งาน</button></h1>
+        <div class="container d-flex align-items-center justify-content-center vh-100">
+            <?php foreach ($result_edit as $product) { ?>
+                <form method="post" action="product_edit_db.php?product_id=<?= $product['product_id']; ?>">
+                    <h1>แก้ไขสินค้า</h1>
 
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ชื่อผู้ใช้</th>
-                        <th scope="col">รหัสผ่าน</th>
-                        <th scope="col">สถานะ</th>
-                        <th scope="col">เครื่องมือ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($result as $user) { ?>
-                        <tr>
-                            <td><?= $user['username_id']; ?></td>
-                            <td><?= $user['tel_id']; ?></td>
-                            <td><?= $user['role_user']; ?></td>
-                            <td>
-                                <button type="button" class="btn btn-outline-warning" onclick="document.location='user_edit.php?iduser=<?= $user['user_id']; ?>'">แก้ไขผู้ใช้งาน</button>
-                                <button type="button" class="btn btn-outline-danger" onclick="document.location='user_delete.php?iduser=<?= $user['user_id']; ?>'">ลบผู้ใช้งาน</button>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    <h2>
+                        <?= $product['product_name']; ?>
+                    </h2>
+                <?php } ?>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">เลขบาร์โค้ด</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required name="barcode" value="<?= $product['barcode']; ?>" maxlength="13">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">ชื่อสินค้า</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" required name="productName" value="<?= $product['product_name']; ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">ราคาสินค้า</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" required name="productPrice" value="<?= $product['price']; ?>">
+                </div>
+                <div class="container d-flex align-items-center justify-content-between">
+                    <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='product_page.php'">ย้อนกลับ</button>
+                    <button type="submit" class="btn btn-outline-primary mx-2" onclick="document.location='product_edit_db.php?product_id=<?= $product['product_id']; ?>'">แก้ไขสินค้า</button>
+                </div>
+                </form>         
         </div>
     </main>
 </body>
