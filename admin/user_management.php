@@ -94,7 +94,7 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
                 <thead>
                     <tr>
                         <th scope="col">ชื่อผู้ใช้</th>
-                        <th scope="col">รหัสผ่าน</th>
+                        <th scope="col">เบอร์โทร</th>
                         <th scope="col">สถานะ</th>
                         <th scope="col">เครื่องมือ</th>
                     </tr>

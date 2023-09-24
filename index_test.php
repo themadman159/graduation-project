@@ -6,9 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="login_db.php" method="post">
-        <input type="text" name ="tel" required>
-        <button type="submit">asdsad</button>
-    </form>
+    
 </body>
 </html>

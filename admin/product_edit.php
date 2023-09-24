@@ -32,7 +32,7 @@ $result_edit = $stmt_edit->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จัดการข้อมูลผู้ใช้งาน</title>
+    <title>แก้ไขสินค้า</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link href="navbar-top.css" rel="stylesheet">
 

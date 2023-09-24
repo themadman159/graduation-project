@@ -11,17 +11,18 @@ if (!isset($_SESSION['tel_id']) || $_SESSION['role_user'] != 'admin') {
     die(header('Location: login_page.php'));
 } 
 
+$barcode_product = $_GET['barcode_product'] ;
+$basket_num = $_GET['basket_code'] ;
+$sql = "SELECT * FROM basket WHERE barcode = '$barcode_product' AND basket_code = '$basket_num'";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 $name = $_SESSION['tel_id'] ;
 $sql_show_name = "SELECT * FROM user WHERE tel_id = '$name'";
 $stmt_show_name = $conn->prepare($sql_show_name) ; 
 $stmt_show_name->execute();
 $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
-
-$iduser = $_GET['iduser'] ;
-$sql_edit = "SELECT * FROM user WHERE user_id = '$iduser'";
-$stmt_edit = $conn->prepare($sql_edit);
-$stmt_edit->execute();
-$result_edit = $stmt_edit->fetch(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -84,26 +85,23 @@ $result_edit = $stmt_edit->fetch(PDO::FETCH_ASSOC);
     </div>
   </div>
   <div class="container d-flex align-items-center justify-content-center vh-100">
-        <form method="post" action="user_edit_db.php?iduser=<?= $result_edit['user_id']; ?>">
-            <h1>แก้ไขข้อมูลผู้ใช้งาน</h1>
+  <?php foreach ($result as $basket) { ?>
+                    
+
+        <form method="post" action="basket_edit_db.php">
+            <h1>แก้ไขสินค้าในรถเข็น</h1>
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">ชื่อผู้ใช้</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required name="username" value="<?=$result_edit['username_id'];?>">
+                <label for="exampleInputEmail1" class="form-label">ชื่อสินค้า</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required name="username" disabled value="<?=$basket['product_name'];?>">
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">เบอร์โทร</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" required name="tel" value="<?=$result_edit['tel_id'];?>">
+                <label for="exampleInputPassword1" class="form-label">จำนวน</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" required name="tel" value="<?=$basket['price'];?>">
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">สถานะผู้ใช้</label>
-                <select class="form-select" aria-label="Default select example" name = "role" value="<?=$result_edit['role_user'];?>">
-                    <option value="member" selected name="member">Member</option>
-                    <option value="admin" name="admin">Admin</option>
-                </select>
-            </div>
+            <?php }?>
             <div class="container d-flex align-items-center justify-content-between">
-                <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='user_management.php'">ย้อนกลับ</button>
-                <button type="submit" class="btn btn-outline-primary mx-2" onclick="document.location='user_edit_db.php?iduser=<?=$result_edit['user_id'];?>'">แก้ไขผู้ใช้งาน</button>
+                <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='basket_edit.php?basket_code=<?= $basket['basket_code']; ?>'">ย้อนกลับ</button>
+                <button type="submit" class="btn btn-outline-primary mx-2" onclick="document.location='basket_edit_db.php?basket_code=<?= $basket['basket_code']; ?>'">แก้ไขสินค้า</button>
             </div>
         </form>
     </div>

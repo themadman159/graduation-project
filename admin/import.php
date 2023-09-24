@@ -29,7 +29,7 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link href="navbar-top.css" rel="stylesheet">
 
-  <link rel="icon" href="../  img/logo.png">
+  <link rel="icon" href="../img/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500&display=swap" rel="stylesheet">

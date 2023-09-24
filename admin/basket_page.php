@@ -32,7 +32,7 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จัดการข้อมูลผู้ใช้งาน</title>
+    <title>จัดการรถเข็น</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link href="navbar-top.css" rel="stylesheet">
 

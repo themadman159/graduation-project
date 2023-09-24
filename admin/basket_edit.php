@@ -18,7 +18,7 @@ $stmt_show_name = $conn->prepare($sql_show_name);
 $stmt_show_name->execute();
 $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
 
-$basket_num = $_GET['basket_code'] ;
+$basket_num = $_GET['basket_code'];
 $sql = "SELECT * FROM basket WHERE basket_code = '$basket_num'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -89,8 +89,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container mt-3 vh-100">
             <h1>รถเข็นคันที่
                 <?php foreach ($result as $basket) { ?>
-                    <?=$basket['basket_code'];?>
-                <?php }?>
+                    <?= $basket['basket_code']; ?>
+                <?php } ?>
                 <button type="button" class="btn btn-outline-primary" onclick="document.location='basket_page.php'">ย้อนกลับ</button>
             </h1>
 
@@ -104,13 +104,13 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($result as $basket) { ?>
+                    <?php foreach ($result as $basket) { ?>
                         <tr>
                             <td><?= $basket['product_name']; ?></td>
                             <td><?= $basket['product_amount']; ?></td>
                             <td>
-                                <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='basket_edit.php?basket_code=<?= $basket['basket_code']; ?>'">แก้ไขสินค้า</button>
-                                <button type="button" class="btn btn-outline-danger" onclick="document.location='basket_product_delete.php?basketcode=<? $basket_num ?>?basket_product=<?= $basket['product_name']; ?>'">ลบ</button>
+                                <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='basket_edit_inside.php?barcode_product=<?= $basket['barcode']; ?>&basket_code=<?=$basket['basket_code']?>'">แก้ไขสินค้า</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="document.location='basket_product_delete.php?basket_code=<?=$basket_num?>&basket_product=<?= $basket['product_name']; ?>'">ลบ</button>
                             </td>
                         </tr>
                     <?php } ?>

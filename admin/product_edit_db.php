@@ -7,14 +7,14 @@
     $product_name = $_POST['productName'];
     $product_price = $_POST['productPrice'];
 
-    $sql = "UPDATE `main_product` SET `barcode`=:barcode, `product_name`=:productName, `price`=:productPrice WHERE `product_id` =:product_id";
+    $sql = "UPDATE `main_product` SET `barcode`=:barcode, `product_name`=:productName, `price`=:productPrice WHERE product_id =:product_id";
 
     $stmt = $conn->prepare($sql);       
 
     $stmt->bindParam(':barcode', $product_barcode, PDO::PARAM_STR) ; 
     $stmt->bindParam(':productName', $product_name, PDO::PARAM_STR) ; 
     $stmt->bindParam(':productPrice', $product_price, PDO::PARAM_STR) ; 
-    $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+    $stmt->bindParam(':product_id', $product_id, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
         echo '<script type="text/Javascript">
