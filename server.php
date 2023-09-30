@@ -1,7 +1,7 @@
 <?php
 
 if ( $open_connect != 1 ) {
-    die (header ('Location: login_page.php') ) ;
+    die (header ('Location: ../register-login/login_page.php') ) ;
 }
 // Establish database connection
 $servername = "localhost";
