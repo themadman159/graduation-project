@@ -13,19 +13,58 @@ if (!isset($_SESSION['tel_id']) || $_SESSION['role_user'] != 'admin') {
 
 $name = $_SESSION['tel_id'];
 
+// Modify your SQL query to include LIMIT and OFFSET
 $sql = "SELECT * FROM main_product";
 $search_text = '';
-if (isset($_POST['search']) && $_POST['search'] != '') {
-    $search_text = $_POST['search'];
-    $sql .= " WHERE barcode LIKE '%$search_text%' or product_name LIKE '%$search_text%'";
-} else {
+
+// Define the number of items per page
+$itemsPerPage = 10;
+
+// Get the current page number from the URL
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+// Calculate the OFFSET for the SQL query
+$offset = ($page - 1) * $itemsPerPage;
+
+// Ensure OFFSET is non-negative
+if ($offset < 0) {
+    $offset = 0;
 }
 
-$sql .= " ORDER BY barcode ASC";
+// Add LIMIT and OFFSET to the SQL query
+$sql .= " ORDER BY barcode ASC LIMIT $itemsPerPage OFFSET $offset";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Count the total number of records
+$totalRecords = $conn->query("SELECT COUNT(*) FROM main_product")->fetchColumn();
+
+// Calculate the total number of pages
+$totalPages = ceil($totalRecords / $itemsPerPage);
+
+// Calculate previous and next page numbers
+$prevPage = ($page > 1) ? $page - 1 : $totalPages; // Wrap to the last page if on the first page
+$nextPage = ($page < $totalPages) ? $page + 1 : 1; // Wrap to the first page if on the last page
+
+// Define the range of page links to display around the current page
+$paginationRange = 5;
+
+// Define $sql before adding conditions
+if (isset($_POST['search']) && $_POST['search'] != '') {
+    $search_text = $_POST['search'];
+    $sql = "SELECT * FROM main_product WHERE barcode LIKE '%$search_text%' OR product_name LIKE '%$search_text%'";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($result > 0) {
+        $error_msg =  "ไม่มีสินค้าของคุณ";
+    }
+} else {
+}
+
+$sql .= " ORDER BY barcode ASC";
 
 $sql_show_name = "SELECT * FROM user WHERE tel_id = '$name'";
 $stmt_show_name = $conn->prepare($sql_show_name);
@@ -97,15 +136,11 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
         <div class="container mt-3 vh-100">
             <div class="d-flex justify-content-between">
                 <h1>จัดการสินค้า</h1>
-                <form class="d-flex" method="post">
+                <form class="d-flex" method="post" action="product_page.php">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value="<?php echo $search_text ?>">
                     <button class="btn btn-outline-primary" type="submit" name="submit">Search</button>
                 </form>
             </div>
-
-
-
-
             <table class="table">
                 <thead>
                     <tr>
@@ -116,20 +151,60 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($result as $product) { ?>
-                        <tr>
-                            <td><?= $product['barcode']; ?></td>
-                            <td><?= $product['product_name']; ?></td>
-                            <td><?= $product['price']; ?></td>
-                            <td>
-                                <button type="button" class="btn btn-outline-warning" onclick="document.location='product_edit.php?barcode_product=<?= $product['product_id']; ?>'">แก้ไขสินค้า</button>
-                                <button type="button" class="btn btn-outline-danger" onclick="document.location='product_delete.php?product_barcode=<?= $product['product_id']; ?>'">ลบสินค้า</button>
-                            </td>
-                            </td>
-                        </tr>
+                    <?php if (count($result) > 0) { ?>
+                        <?php foreach ($result as $product) { ?>
+                            <tr>
+                                <td><?= $product['barcode']; ?></td>
+                                <td><?= $product['product_name']; ?></td>
+                                <td><?= $product['price']; ?></td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-warning" onclick="document.location='product_edit.php?barcode_product=<?= $product['product_id']; ?>'">แก้ไขสินค้า</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="document.location='product_delete.php?product_barcode=<?= $product['product_id']; ?>'">ลบสินค้า</button>
+                                </td>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <td colspan="4" class="text-center">ไม่มีสินค้านี้อยู่ในระบบ</td>
+
                     <?php } ?>
                 </tbody>
             </table>
+            <div class="container">
+                <div class="text-center">
+                    <ul class="pagination justify-content-center">
+                        <?php
+                        if ($page > 1) {
+                            echo "<li class='page-item'><a class='page-link' href='product_page.php?page=" . ($page - 1) . "'>Previous</a></li>";
+                        }
+
+                        for ($i = 1; $i <= $totalPages; $i++) {
+                            if (
+                                $i == 1 ||               // Always show the first page
+                                $i == $totalPages ||     // Always show the last page
+                                abs($i - $page) <= $paginationRange  // Show pages within the defined range
+                            ) {
+                                echo "<li class='page-item";
+                                if ($i === $page) {
+                                    echo " active";
+                                }
+                                echo "'><a class='page-link' href='product_page.php?page=$i'>$i</a></li>";
+                            } elseif (
+                                ($i == 2 && abs($i - $page) > $paginationRange) ||  // Collapse pages after the first page
+                                ($i == $totalPages - 1 && abs($i - $page) > $paginationRange)  // Collapse pages before the last page
+                            ) {
+                                echo "<li class='page-item disabled'><span class='page-link'>...</span></li>";
+                            }
+                        }
+
+                        if ($page < $totalPages) {
+                            echo "<li class='page-item'><a class='page-link' href='product_page.php?page=" . ($page + 1) . "'>Next</a></li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </main>
 </body>
