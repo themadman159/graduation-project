@@ -15,7 +15,6 @@ $name = $_SESSION['tel_id'];
 
 // Modify your SQL query to include LIMIT and OFFSET
 $sql = "SELECT * FROM main_product";
-$search_text = '';
 
 // Define the number of items per page
 $itemsPerPage = 10;
@@ -51,20 +50,36 @@ $nextPage = ($page < $totalPages) ? $page + 1 : 1; // Wrap to the first page if 
 // Define the range of page links to display around the current page
 $paginationRange = 5;
 
-// Define $sql before adding conditions
+// Initialize $search_text to an empty string
+$search_text = '';
+
 if (isset($_POST['search']) && $_POST['search'] != '') {
     $search_text = $_POST['search'];
-    $sql = "SELECT * FROM main_product WHERE barcode LIKE '%$search_text%' OR product_name LIKE '%$search_text%'";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    if ($result > 0) {
-        $error_msg =  "ไม่มีสินค้าของคุณ";
-    }
-} else {
+    $_SESSION['search_text'] = $search_text; // Store the search text in a session variable
+} elseif (isset($_POST['search']) && $_POST['search'] === '') {
+    // If a search query is empty, reset the session search text
+    unset($_SESSION['search_text']);
+} elseif (isset($_SESSION['search_text'])) {
+    $search_text = $_SESSION['search_text']; // Retrieve the search text from the session
 }
 
-$sql .= " ORDER BY barcode ASC";
+// Define $sql after adding conditions
+$sql = "SELECT * FROM main_product WHERE barcode LIKE '%$search_text%' OR product_name LIKE '%$search_text%'";
+
+// Your existing code continues here...
+
+// Count the total number of records (taking into account the search condition)
+$totalRecords = $conn->query("SELECT COUNT(*) FROM main_product WHERE barcode LIKE '%$search_text%' OR product_name LIKE '%$search_text%'")->fetchColumn();
+
+// Calculate the total number of pages
+$totalPages = ceil($totalRecords / $itemsPerPage);
+
+// Calculate previous and next page numbers
+$prevPage = ($page > 1) ? $page - 1 : $totalPages; // Wrap to the last page if on the first page
+$nextPage = ($page < $totalPages) ? $page + 1 : 1; // Wrap to the first page if on the last page
+
+// Define the range of page links to display around the current page
+$paginationRange = 5;
 
 $sql_show_name = "SELECT * FROM user WHERE tel_id = '$name'";
 $stmt_show_name = $conn->prepare($sql_show_name);
