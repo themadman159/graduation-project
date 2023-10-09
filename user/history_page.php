@@ -59,6 +59,8 @@ if (!isset($_SESSION['tel_id']) || !isset($_SESSION['role_user'])) {
                     <button type="button" class="btn btn-outline-primary mx-2 my-1" onclick="document.location='history_detail.php?date=<?= $val['date']; ?>'">วันที่ <?php echo $dateInDMY ?></button>
                     <br>
                 <?php } ?>
+            <?php } else { ?>
+                <p>คุณยังไม่ได้เคยบันทึกรายการสินค้าย้อนหลัง</p>
             <?php } ?>
             <hr>
         </section>

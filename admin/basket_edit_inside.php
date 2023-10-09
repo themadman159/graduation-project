@@ -96,7 +96,7 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">จำนวน</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" required name="tel" value="<?=$basket['price'];?>">
+                <input type="text" class="form-control" id="exampleInputPassword1" required name="tel" value="<?=$basket['product_amount'];?>">
             </div>
             <?php }?>
             <div class="container d-flex align-items-center justify-content-between">
