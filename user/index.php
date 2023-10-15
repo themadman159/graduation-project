@@ -109,7 +109,13 @@ $time = date("H:i");
                 บันทึกรายการย้อนหลัง
             </button>
 
-            <button type="button" class="btn btn-outline-danger" onclick="document.location='../register-login/login_page.php?logout=1'">ออกจากระบบ</a></button>
+            <button type="button" class="btn btn-outline-danger" onclick="document.location='../register-login/login_page.php?logout=1'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-closed" viewBox="0 0 16 16">
+                    <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z" />
+                    <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z" />
+                </svg>
+                ออกจากระบบ
+            </button>
             <br>
             <div class="d-grid gap-2 py-2">
                 <button type="button" class="btn btn-primary " id="download_bill">
