@@ -22,6 +22,15 @@ $barcode = $conn->real_escape_string($barcode);
 $basket_code = $conn->real_escape_string($basket_code);
 $product_amount = $conn->real_escape_string($amount_get);
 
+$result_sale = $conn->query("SELECT basket_status FROM sale WHERE basket_status = '0'"); 
+
+if ( $result_sale->num_rows > 0 ) {
+
+} else {
+    $sql_sale = "INSERT INTO sale ( date_time , basket_code , basket_status ) value ( NOW() , '$basket_code' , '0')" ; 
+    $insert_sale = $conn->query($sql_sale);
+}
+
 // Fetch product info from database based on barcode
 $result = $conn->query("SELECT product_name, price FROM main_product WHERE barcode = '$barcode'");
 
@@ -34,7 +43,7 @@ if ($result->num_rows > 0) {
     // Create JSON response
     $response = array("product_name" => $product_name, "price" => $price);
 
-    $result_basket_data = $conn->query("SELECT product_name, price, basket_code, product_amount FROM basket WHERE product_name = '$product_name' AND basket_code = '$basket_code'");
+    $result_basket_data = $conn->query("SELECT product_name, price, basket_code, product_amount, sale_id FROM basket WHERE product_name = '$product_name' AND basket_code = '$basket_code' AND sale_id = 0");
     if ($result_basket_data->num_rows > 0) {
         $row_basket_data = $result_basket_data->fetch_assoc();
         $product_name = $row_basket_data['product_name'];

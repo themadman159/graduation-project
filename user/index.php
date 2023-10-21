@@ -58,7 +58,7 @@ $time = date("H:i");
                     <td class="px-3">ราคาสินค้าทั้งหมด</td>
                 </tr>
                 <?php
-                $sql = "SELECT * FROM basket order by 'basket' ; ";
+                $sql = "SELECT * FROM basket WHERE sale_id = 0 ORDER BY basket_code";
                 $query = mysqli_query($conn, $sql);
                 $rows = mysqli_num_rows($query);
                 $arr_amount = [];
@@ -79,7 +79,7 @@ $time = date("H:i");
                         }
                     }
                     // ราคารวมสินค้าทั้งหมด 
-                    $sql_amount = mysqli_query($conn, "SELECT SUM(product_amount * price) as total_price FROM basket ;");
+                    $sql_amount = mysqli_query($conn, "SELECT SUM(product_amount * price) as total_price FROM basket WHERE sale_id = 0;");
                     while ($rows = mysqli_fetch_assoc($sql_amount)) {
                         $total_price = $rows['total_price'];
                     }
