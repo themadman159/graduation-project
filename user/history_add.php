@@ -44,14 +44,14 @@ if ($userData) {
             echo "Error inserting data into user_history: " . $insertStmt->errorInfo()[2] . "<br>";
         }
 
-        $sql_get_sale_id = "SELECT sale_id FROM sale WHERE user_id = :iduser";
+        $sql_get_sale_id = "SELECT MAX(sale_id) as max_sale_id FROM sale WHERE user_id = :iduser";
         $getSaleIdStmt = $conn->prepare($sql_get_sale_id);
         $getSaleIdStmt->bindParam(':iduser', $iduser, PDO::PARAM_STR);
         $getSaleIdStmt->execute();
 
         $sale_data = $getSaleIdStmt->fetch(PDO::FETCH_ASSOC);
         if ($sale_data) {
-            $sale_id = $sale_data['sale_id'];
+            $sale_id = $sale_data['max_sale_id'];
 
             // Now that you have the sale_id, you can update it in the "basket" table
             $sql_update_basket = "UPDATE basket SET sale_id = :sale_id WHERE sale_id = 0";
