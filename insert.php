@@ -13,9 +13,9 @@ $conn->set_charset("utf8");
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
 // Get barcode from query parameter
-$barcode = $_POST["barcode"];
-$basket_code = $_POST["basket_code"];
-$amount_get = $_POST["product_amount"] ;
+$barcode = $_GET["barcode"];
+$basket_code = $_GET["basket_code"];
+$amount_get = $_GET["product_amount"] ;
 
 $barcode = $conn->real_escape_string($barcode);
 $product_amount = $conn->real_escape_string($amount_get);
