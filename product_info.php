@@ -26,7 +26,7 @@ $result_sale = $conn->query("SELECT basket_status FROM sale WHERE basket_status 
 
 if ($result_sale->num_rows > 0) {
 } else {
-    $sql_sale = "INSERT INTO sale ( date_time , basket_code , basket_status ) value ( NOW() , '$basket_code' , '0')";
+    $sql_sale = "INSERT INTO sale ( date_time , basket_code , basket_status ) VALUES ( NOW() , '$basket_code' , '0')";
     $insert_sale = $conn->query($sql_sale);
 }
 
@@ -40,7 +40,7 @@ if ($result->num_rows > 0) {
 
 
     // Create JSON response
-    $response = array("product_name" => $product_name, "price" => $price);
+    $response = array("product_name" => $product_name, "price" => $price, "basket_code" => $basket_code );
 
     $query = "SELECT MAX(sale_id) as max_sale_id FROM sale";
     $result_sale = $conn->query($query);

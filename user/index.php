@@ -58,7 +58,17 @@ $time = date("H:i");
                     <td class="px-3">ราคาสินค้าทั้งหมด</td>
                 </tr>
                 <?php
-                $sql = "SELECT * FROM basket WHERE sale_id = 0 ORDER BY basket_code";
+                $query_sale_id = "SELECT MAX(sale_id) as max_sale_id FROM sale";
+                $result_sale_id = $conn->query($query_sale_id);
+                $row_sale_id = $result_sale_id->fetch_assoc();
+                $max_sale_id = $row_sale_id['max_sale_id'];
+
+                $query_bk_status = "SELECT basket_status FROM sale WHERE sale_id = '$max_sale_id'";
+                $result_bk_status = $conn->query($query_bk_status);
+                $row_bk_status = $result_bk_status->fetch_assoc();
+                $basket_status = $row_bk_status['basket_status'];
+
+                $sql = "SELECT * FROM basket WHERE sale_id = '$max_sale_id' ORDER BY basket_code";
                 $query = mysqli_query($conn, $sql);
                 $rows = mysqli_num_rows($query);
                 $arr_amount = [];
@@ -79,7 +89,7 @@ $time = date("H:i");
                         }
                     }
                     // ราคารวมสินค้าทั้งหมด 
-                    $sql_amount = mysqli_query($conn, "SELECT SUM(product_amount * price) as total_price FROM basket WHERE sale_id = 0;");
+                    $sql_amount = mysqli_query($conn, "SELECT SUM(product_amount * price) as total_price FROM basket WHERE sale_id = '$max_sale_id'");
                     while ($rows = mysqli_fetch_assoc($sql_amount)) {
                         $total_price = $rows['total_price'];
                     }
