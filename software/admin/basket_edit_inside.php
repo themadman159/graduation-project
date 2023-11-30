@@ -11,9 +11,9 @@ if (!isset($_SESSION['tel_id']) && $_SESSION['role_user'] != 'admin') {
   die(header('Location: ./register-login/login_page.php'));
 }
 
-$barcode_product = $_GET['barcode_product'];
+$basket_id = $_GET['basket_id'];
 $basket_num = $_GET['basket_code'];
-$sql = "SELECT * FROM basket WHERE barcode = '$barcode_product' AND basket_code = '$basket_num'";
+$sql = "SELECT * FROM basket WHERE basket_id = '$basket_id' AND basket_code = '$basket_num'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -32,11 +32,12 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>จัดการประวัติสินค้าในรถเข็น</title>
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link href="sidebars.css" rel="stylesheet">
   <script src="../js/bootstrap.min.js"></script>
 
+  <link rel="icon" href="../img/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500&display=swap" rel="stylesheet">
@@ -104,20 +105,20 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
       <?php foreach ($result as $basket) { ?>
 
 
-        <form method="post" action="basket_edit_db.php">
+        <form method="post" action="basket_edit_db.php?basket_id=<?= $basket['basket_id']; ?>">
           <h1>แก้ไขสินค้าในรถเข็น</h1>
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">ชื่อสินค้า</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required name="username" disabled value="<?= $basket['product_name']; ?>">
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required name="product_name" disabled value="<?= $basket['product_name']; ?>">
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">จำนวน</label>
-            <input type="text" class="form-control" id="exampleInputPassword1" required name="tel" value="<?= $basket['product_amount']; ?>">
+            <input type="text" class="form-control" id="exampleInputPassword1" required name="product_amount" value="<?= $basket['product_amount']; ?>">
           </div>
         <?php } ?>
         <div class="container d-flex align-items-center justify-content-between">
           <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='basket_edit.php?basket_code=<?= $basket['basket_code']; ?>'">ย้อนกลับ</button>
-          <button type="submit" class="btn btn-outline-primary mx-2" onclick="document.location='basket_edit_db.php?basket_code=<?= $basket['basket_code']; ?>'">แก้ไขสินค้า</button>
+          <button type="submit" class="btn btn-outline-primary mx-2" onclick="document.location='basket_edit_db.php?basket_id=<?= $basket['basket_id']; ?>'">แก้ไขสินค้า</button>
         </div>
         </form>
     </div>

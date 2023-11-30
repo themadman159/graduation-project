@@ -116,6 +116,10 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
           <div class="text-center">
             <img src="../img/import_ex.png" alt="">
           </div>
+          <p for="formFile" class="form-label">การนำเข้าข้อมูลเข้าสู่ฐานระบบนั้นควรทำตามคำแนะนำคือ</p>
+          <p for="formFile" class="form-label">แถวที่ 1 คอลั่มที่ 1 ควรใส่ข้อมูลบาร์โค้ด</p>
+          <p for="formFile" class="form-label">แถวที่ 1 คอลั่มที่ 2 ควรใส่ข้อมูลชื่อสินค้า</p>
+          <p for="formFile" class="form-label">แถวที่ 1 คอลั่มที่ 3 ควรใส่ข้อมูลราคาสินค้า</p>
       </form>
 
     </div>

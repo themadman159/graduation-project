@@ -37,7 +37,7 @@ if ($userData) {
             // The insertion was successful for this row
             echo '<script type="text/Javascript">
                 window.alert("บันทึกข้อมูลย้อนหลังเรียบร้อยแล้ว") ;
-                window.location.href = "index.php" ;
+                window.location.href = "../index.php" ;
             </script>';
         } else {
             // There was an error during insertion

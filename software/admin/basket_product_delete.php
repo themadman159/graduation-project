@@ -2,10 +2,10 @@
 
 require('../server_pdo.php');
 
-$basket_product = $_GET['basket_product'];
+$basket_id = $_GET['basket_id'];
 $basket_num = $_GET['basket_code'];
 
-$sql_product = "DELETE FROM basket WHERE basket_code = '$basket_num' AND product_name = '$basket_product' ";
+$sql_product = "DELETE FROM basket WHERE basket_code = '$basket_num' AND basket_id = '$basket_id' ";
 
 $stmt_product = $conn->prepare($sql_product);
 

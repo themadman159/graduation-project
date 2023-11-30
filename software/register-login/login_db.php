@@ -17,7 +17,7 @@ if ( isset($_POST["tel"])) {
         if($result_check_account['role_user'] == 'member') {
             $_SESSION['tel_id'] = $result_check_account['tel_id'] ; 
             $_SESSION['role_user'] = $result_check_account['role_user'] ; 
-            die (header('Location: ../user/index.php')) ; 
+            die (header('Location: ../index.php')) ; 
         } elseif ($result_check_account['role_user'] == 'admin') {
             $_SESSION['tel_id'] = $result_check_account['tel_id'] ; 
             $_SESSION['role_user'] = $result_check_account['role_user'] ; 

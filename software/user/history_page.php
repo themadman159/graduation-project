@@ -14,6 +14,8 @@ if (!isset($_SESSION['tel_id']) || !isset($_SESSION['role_user'])) {
     $query_show = "SELECT * FROM user WHERE tel_id = '$tel_id'";
     $call_back_show = mysqli_query($conn, $query_show);
     $result_show = mysqli_fetch_assoc($call_back_show);
+
+    $iduser = $result_show['user_id'];
 }
 
 ?>
@@ -44,19 +46,20 @@ if (!isset($_SESSION['tel_id']) || !isset($_SESSION['role_user'])) {
         <section class="text-center">
             <h2>รายการย้อนหลัง</h2>
             <h4>ของคุณ <?php echo $result_show['username_id'] ?></h4>
-            
+
         </section>
         <section>
-            <?php $sql = "SELECT DISTINCT date FROM user_history WHERE tel_id = '$tel_id' ORDER BY date"; ?>
+            <?php $sql = "SELECT DISTINCT sale_id, date_time FROM sale WHERE user_id = '$iduser' ORDER BY date_time"; ?>
             <?php $query = mysqli_query($conn, $sql); ?>
             <?php $rows = mysqli_num_rows($query); ?>
             <?php if ($rows > 0) { ?>
                 <?php foreach ($query as $val) { ?>
+
                     <?php
-                    $dateInYYYYMMDD = $val['date'];
+                    $dateInYYYYMMDD = $val['date_time'];
                     $dateInDMY = date("d-m-Y", strtotime($dateInYYYYMMDD));
                     ?>
-                    <button type="button" class="btn btn-outline-primary mx-2 my-1" onclick="document.location='history_detail.php?date=<?= $val['date']; ?>'">วันที่ <?php echo $dateInDMY ?></button>
+                    <a class="btn btn-outline-primary mx-2 my-1" href="history_detail.php?sale_id=<?=$val['sale_id']?>&date=<?= $val['date_time']?>">วันที่ <?php echo $dateInDMY ?></a>
                     <br>
                 <?php } ?>
             <?php } else { ?>
@@ -65,7 +68,7 @@ if (!isset($_SESSION['tel_id']) || !isset($_SESSION['role_user'])) {
             <hr>
         </section>
         <div>
-            <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='index.php'">ย้อนกลับ</button>
+            <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='../index.php'">ย้อนกลับ</button>
         </div>
     </div>
 </body>

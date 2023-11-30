@@ -100,7 +100,7 @@ $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">เบอร์โทร</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" required name="tel">
+                <input type="text" class="form-control" id="exampleInputPassword1" required name="tel" maxlength="10">
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">สถานะผู้ใช้</label>

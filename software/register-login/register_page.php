@@ -19,11 +19,27 @@
     }
   </style>
 </head>
+<script>
+
+  const numberValidationFunc =() => {
+
+    var input = document.getElementById("floatingPassword").value;
+    var pattern = /^[0-9]+$/;
+
+    if (input.match(pattern)) {
+      return true;
+    } else {
+      alert("กรุณากรอกเบอร์โทรให้เป็นตัวเลขระหว่าง 0-9 ให้ครบ 10 ตัวอักษร")
+      return false;
+    }
+  }
+
+</script>
 
 <body class="text-center">
 
   <main class="form-signin">
-    <form method="post" action="register_db.php">
+    <form method="post" action="register_db.php" onsubmit="return numberValidationFunc()">
       <img class="mb-4" src="../img/logo.png" alt="" width="72" height="72">
       <h1 class="h3 mb-3 fw-normal">สมัครสมาชิก</h1>
 
@@ -37,15 +53,13 @@
       </div>
       <label for="">มีสมาชิกอยู่แล้ว ? <a href="login_page.php">เข้าสู่ระบบ</a></label>
       <div class="d-flex align-items-center">
-        <button class="w-100 btn btn-lg btn-primary" type="submit" name="submitfrom"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+        <button class="w-100 btn btn-lg btn-primary" type="submit" name="submitfrom" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
             <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
             <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
           </svg>
           <span class="ms-2">ยืนยัน</span>
         </button>
       </div>
-
-
       <p class="mt-5 mb-3 text-muted">© 2023</p>
     </form>
   </main>

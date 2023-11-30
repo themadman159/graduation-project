@@ -7,7 +7,7 @@
     $product_name = $_POST['productName'];
     $product_price = $_POST['productPrice'];
 
-    $sql = "UPDATE `main_product` SET `barcode`=:barcode, `product_name`=:productName, `price`=:productPrice WHERE product_id =:product_id";
+    $sql = "UPDATE `basket` SET `barcode`=:barcode, `product_name`=:productName, `price`=:productPrice WHERE product_id =:product_id";
 
     $stmt = $conn->prepare($sql);       
 

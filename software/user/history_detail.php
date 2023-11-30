@@ -13,16 +13,19 @@ if (!isset($_SESSION['tel_id']) || !isset($_SESSION['role_user'])) {
     $tel_id = $_SESSION['tel_id'];
     $query_show = "SELECT * FROM user WHERE tel_id = '$tel_id'";
     $call_back_show = mysqli_query($conn, $query_show);
-    $result_show = mysqli_fetch_assoc($call_back_show);
+    $result_show_name = mysqli_fetch_assoc($call_back_show);
 }
 
-$date = $_GET['date'];
-$sql = "SELECT * FROM user_history WHERE date = '$date' AND tel_id = '$tel_id'";
+$sql = "SELECT * FROM sale ";
 $result = mysqli_query($conn, $sql);
 $result_show = mysqli_fetch_assoc($result);
 
-$dateInYYYYMMDD = $result_show['date'];
+$sale_id = $_GET['sale_id'];
+
+$date = $_GET['date'];
+$dateInYYYYMMDD = $date;
 $dateInDMY = date("d-m-Y", strtotime($dateInYYYYMMDD));
+$timeInHM = date("H:i", strtotime($dateInYYYYMMDD));
 ?>
 
 <!DOCTYPE html>
@@ -49,9 +52,11 @@ $dateInDMY = date("d-m-Y", strtotime($dateInYYYYMMDD));
 <body class="bg-light">
     <div class="container vh-100 d-flex flex-column justify-content-center align-items-center bg-white w-50">
         <section class="text-center">
+            <img src="../img/logo.png" alt="" width="150" height="150">
             <h2>รายการย้อนหลัง</h2>
             <h3>ในวันที่ <?php echo $dateInDMY ?></h3>
-            <h4>ของคุณ <?php echo $result_show['username_id'] ?></h4>
+            <h5>เมื่อเวลา <?php echo $timeInHM ?> น.</h5>
+            <h4>ของคุณ <?php echo $result_show_name['username_id'] ?></h4>
         </section>
         <section class="justify-content-center text-center">
             <table class="text-center p-3 m-3 mx-auto">
@@ -61,14 +66,13 @@ $dateInDMY = date("d-m-Y", strtotime($dateInYYYYMMDD));
                     <td class="px-2">จำนวนสินค้า</td>
                     <td>รวมราคาทั้งหมด</td>
                 </tr>
-
-                <?php $sql = "SELECT * FROM user_history order by 'user_history' ; "; ?>
+                <?php $sql = "SELECT * FROM basket WHERE sale_id = '$sale_id'"; ?>
                 <?php $query = mysqli_query($conn, $sql);  ?>
                 <?php $rows = mysqli_num_rows($query);  ?>
                 <?php $arr_amount = [];  ?>
                 <?php if ($rows > 0) {  ?>
                     <?php foreach ($query as $val) {  ?>
-                        <?php if ($val['date'] == $date and $val['tel_id'] == $tel_id) { ?>
+                        <?php if ($val['sale_id'] == $sale_id) { ?>
 
                             <tr class="py-1">
                                 <td class="px-2"><?= $val['product_name']; ?></td>
@@ -79,7 +83,7 @@ $dateInDMY = date("d-m-Y", strtotime($dateInYYYYMMDD));
                         <?php     } ?>
                     <?php  } ?>
                     <?php
-                    $sql_amount = mysqli_query($conn, "SELECT SUM(product_amount * price) as total_price FROM user_history ;");
+                    $sql_amount = mysqli_query($conn, "SELECT SUM(product_amount * price) as total_price FROM basket WHERE sale_id = '$sale_id';");
                     while ($rows = mysqli_fetch_assoc($sql_amount)) {
                         $total_price = $rows['total_price'];
                     }
