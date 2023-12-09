@@ -19,7 +19,7 @@ $stmt_show_name->execute();
 $result_show_name = $stmt_show_name->fetchAll(PDO::FETCH_ASSOC);
 
 $basket_num = $_GET['basket_code'];
-$sql = "SELECT * FROM basket WHERE basket_code = '$basket_num'";
+$sql = "SELECT * FROM sale INNER JOIN user ON sale.user_id = user.user_id";
 // $stmt = $conn->prepare($sql);
 // $stmt->execute();
 // $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -39,7 +39,7 @@ if ($offset < 0) {
 }
 
 // Add LIMIT and OFFSET to the SQL query
-$sql .= " ORDER BY barcode ASC LIMIT $itemsPerPage OFFSET $offset";
+$sql .= " ORDER BY sale.user_id ASC LIMIT $itemsPerPage OFFSET $offset";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -150,13 +150,13 @@ $paginationRange = 5;
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                                 <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
                             </svg>
-                            ชื่อสินค้า
+                            ชื่อลูกค้า
                         </th>
                         <th>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
                                 <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                             </svg>
-                            จำนวนสินค้า
+                            วันที่และเวลา
                         </th>
                         <th>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -170,16 +170,16 @@ $paginationRange = 5;
                 <tbody>
                     <?php foreach ($result as $basket) { ?>
                         <tr>
-                            <td><?= $basket['product_name']; ?></td>
-                            <td><?= $basket['product_amount']; ?></td>
+                            <td><?= $basket['username_id']; ?></td>
+                            <td><?= $basket['date_time']; ?></td>
                             <td>
-                                <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='basket_edit_inside.php?basket_id=<?= $basket['basket_id']; ?>&basket_code=<?= $basket['basket_code'] ?>'">
+                                <button type="button" class="btn btn-outline-warning mx-2" onclick="document.location='basket_edit_inside.php?user_id=<?= $basket['user_id'] ?>&sale_id=<?= $basket['sale_id'] ?>'">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
                                         <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
                                     </svg>
-                                    แก้ไขสินค้า
+                                    แก้ไขข้อมูลลูกค้า
                                 </button>
-                                <button type="button" class="btn btn-outline-danger" onclick="document.location='basket_product_delete.php?basket_code=<?= $basket_num ?>&basket_id=<?= $basket['basket_id']; ?>'">
+                                <button type="button" class="btn btn-outline-danger" onclick="document.location='basket_product_delete.php?user_id=<?= $basket['user_id'] ?>&sale_id=<?= $basket['sale_id'] ?>'">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
                                         <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                     </svg>
