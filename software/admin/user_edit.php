@@ -30,11 +30,12 @@ $result_edit = $stmt_edit->fetch(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>แก้ไขผู้ใช้งาน</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link href="sidebars.css" rel="stylesheet">
     <script src="../js/bootstrap.min.js"></script>
 
+    <link rel="icon" href="../img/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500&display=swap" rel="stylesheet">
