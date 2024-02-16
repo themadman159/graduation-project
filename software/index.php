@@ -39,6 +39,20 @@ $time = date("H:i");
         body {
             font-family: 'Kanit', sans-serif;
         }
+
+        @media screen and (max-width: 768px) {
+            .text-respon {
+                display: block;
+                max-width: 15ch;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
     </style>
 
 </head>
@@ -54,9 +68,10 @@ $time = date("H:i");
                     <p><?php echo "วันที่ " . $date . " เวลา " . $time . " น."; ?></p>
                     <hr>
                     <tr>
-                        <td class="px-3">ชื่อสินค้า</td>
-                        <td class="px-3">จำนวนสินค้า</td>
-                        <td class="px-3">ราคาสินค้าทั้งหมด</td>
+                        <td class="px-3"></td>
+                        <td class="px-3"></td>
+                        <td class="px-3"></td>
+                        <td class="px-3"></td>
                     </tr>
                     <?php
                     $query_sale_id = "SELECT MAX(sale_id) as max_sale_id FROM sale";
@@ -78,14 +93,22 @@ $time = date("H:i");
                             if ($val['basket_code'] == "1") {
                                 echo "<tr>";
                                 $all_product_name = $val['product_name'];
-                                echo "<td class = 'px-3'>" . $all_product_name . "</td>";
                                 if ($val['product_amount'] > 0) {
-                                    echo "<td class = 'px-3'>" . $val['product_amount'] . "</td>";
+                                    echo "<td class = 'px-3'>" . $val['product_amount'] . "</td>"; // จำนวนสินค้า
                                 }
+                                echo "<div class='text-left'><td class = 'px-3 text-respon' style='width:90%'>" . $all_product_name . "</td></div>"; // ชื่อสินค้า
+
+                                if ($val['product_amount'] > 1) {
+                                    echo "<td class = 'px-3'>" . $val['price'] . "</td>"; // จำนวนสินค้า
+                                } else { 
+                                    echo "<td class = 'px-3'> </td>";
+                                }
+
                                 if ($val['price'] > 0) {
                                     echo "<td class = 'px-3'>" . $val['price'] * $val['product_amount'] . "</td>";
                                     $total_current = $val['price'] * $val['product_amount'];
                                 }
+
                                 echo "</tr>";
                             }
                         }
@@ -94,7 +117,7 @@ $time = date("H:i");
                         while ($rows = mysqli_fetch_assoc($sql_amount)) {
                             $total_price = $rows['total_price'];
                         }
-                        echo "<td colspan = '2' class ='bg-success text-white'>ราคาสินค้าทั้งหมด</td>" . "<td>" . $total_price . "</td>";
+                        echo "<td colspan = '2' class ='bg-success text-white'>ราคาสินค้าทั้งหมด</td>" . "<td colspan = '2'>" . $total_price . "</td>";
                     } else {
                         echo "<tr>";
                         echo "<td colspan = '3'class = 'px-3'>ไม่มีสินค้าอยู่ในตะกร้าของคุณ</td>";
